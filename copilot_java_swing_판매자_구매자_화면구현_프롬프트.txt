@@ -1,0 +1,444 @@
+DB는 연동하지 않고 샘플 데이터를 배열 등으로 관리해줘.
+ShoppingMallApp.java
+파일에서
+1.구매자 파일명 : ShoppingBuyer.java
+2.판매자 파일명 : ShoppingSeller.java
+3.계산기 파일명 : Cal.java
+
+계산기 메뉴는 모든 화면에 클릭 하면 계산기를 새로운 창으로 띄울 수 있도록 java swing으로 작성해줘.
+
+Java Swing을 이용한 쇼핑몰 구매자/판매자 전환 시스템 프롬프트
+📋 프로젝트 개요
+Java Swing을 활용하여 구매자와 판매자 화면을 전환하며 실행할 수 있는 쇼핑몰 관리 시스템을 개발합니다.
+
+🛒 구매자 기능 상세 (Buyer Features)
+1. 회원가입 (Sign Up)
+java
+// 회원가입 화면 구성 요소
+- 아이디 입력 필드 (JTextField)
+- 비밀번호 입력 필드 (JPasswordField)
+- 비밀번호 확인 필드 (JPasswordField)
+- 이름 입력 필드 (JTextField)
+- 이메일 입력 필드 (JTextField)
+- 전화번호 입력 필드 (JTextField)
+- 생년월일 입력 필드 (JTextField)
+- 가입 버튼 (JButton)
+- 취소 버튼 (JButton)
+
+// 유효성 검사
+- 아이디 중복 체크
+- 비밀번호 일치 여부 확인
+- 이메일 형식 검증
+- 필수 입력 항목 체크
+2. 회원상세보기 (Member Detail View)
+java
+// 회원 정보 표시 화면
+- 아이디 (JLabel)
+- 이름 (JLabel)
+- 이메일 (JLabel)
+- 전화번호 (JLabel)
+- 가입일 (JLabel)
+- 최근 로그인 일시 (JLabel)
+- 등급/포인트 정보 (JLabel)
+- 수정 버튼 (JButton)
+- 뒤로가기 버튼 (JButton)
+3. 회원수정화면 (Member Update)
+java
+// 회원 정보 수정 화면
+- 비밀번호 변경 필드 (JPasswordField)
+- 새 비밀번호 확인 (JPasswordField)
+- 이메일 수정 필드 (JTextField)
+- 전화번호 수정 필드 (JTextField)
+- 주소 수정 필드 (JTextField)
+- 저장 버튼 (JButton)
+- 취소 버튼 (JButton)
+- 현재 비밀번호 확인 필드 (JPasswordField)
+4. 회원탈퇴 (Member Withdrawal)
+java
+// 회원 탈퇴 화면
+- 탈퇴 확인 체크박스 (JCheckBox)
+- 비밀번호 확인 필드 (JPasswordField)
+- 탈퇴 사유 선택 콤보박스 (JComboBox)
+  - 서비스 불만족
+  - 사용 빈도 낮음
+  - 개인정보 우려
+  - 기타
+- 탈퇴 사유 상세 입력 (JTextArea)
+- 탈퇴 진행 버튼 (JButton)
+- 취소 버튼 (JButton)
+- 경고 메시지 표시 (JLabel)
+5. 배송지관리기능 (Shipping Address Management)
+java
+// 배송지 목록 화면
+- 배송지 목록 테이블 (JTable)
+  - 배송지명, 받는사람, 주소, 연락처, 기본배송지 여부
+- 새 배송지 추가 버튼 (JButton)
+- 배송지 수정 버튼 (JButton)
+- 배송지 삭제 버튼 (JButton)
+- 기본배송지 설정 버튼 (JButton)
+
+// 배송지 추가/수정 화면
+- 배송지명 입력 (JTextField)
+- 받는사람 입력 (JTextField)
+- 우편번호 입력 (JTextField)
+- 기본주소 입력 (JTextField)
+- 상세주소 입력 (JTextField)
+- 연락처 입력 (JTextField)
+- 기본배송지 설정 체크박스 (JCheckBox)
+- 저장 버튼 (JButton)
+- 취소 버튼 (JButton)
+- 우편번호 검색 버튼 (JButton)
+6. 주문내역 (Order History)
+java
+// 주문내역 목록 화면
+- 주문내역 테이블 (JTable)
+  - 주문번호, 주문일자, 상품명, 수량, 금액, 배송상태, 취소여부
+- 주문 상세보기 버튼 (JButton)
+- 기간별 검색 패널
+  - 시작일 (JDateChooser)
+  - 종료일 (JDateChooser)
+  - 검색 버튼 (JButton)
+- 상태별 필터 콤보박스 (JComboBox)
+  - 전체, 결제완료, 배송준비, 배송중, 배송완료, 취소
+- 정렬 옵션 (JComboBox)
+  - 최신순, 오래된순, 금액높은순, 금액낮은순
+
+// 주문 상세보기 화면
+- 주문 기본정보
+  - 주문번호, 주문일시, 주문자명
+- 배송정보
+  - 받는사람, 주소, 연락처
+- 주문상품 목록
+  - 상품명, 옵션, 수량, 가격, 합계
+- 결제정보
+  - 결제수단, 총금액, 할인금액, 최종결제금액
+- 주문상태 변경 (관리자용)
+- 주문 취소 버튼 (구매자용)
+- 뒤로가기 버튼 (JButton)
+🏪 판매자 기능 상세 (Seller Features)
+1. 판매자 대시보드 (Dashboard)
+java
+// 판매자 메인 화면
+- 오늘의 주문 건수 표시 (JLabel)
+- 총 매출액 표시 (JLabel)
+- 월별 매출 그래프 (JPanel with Graphics)
+- 신규 주문 알림 목록 (JList)
+- 재고 부족 상품 알림 (JList)
+- 최근 리뷰 표시 (JTextArea)
+- 통계 요약 패널
+  - 오늘 방문자 수
+  - 신규 가입자 수
+  - 평균 주문 금액
+2. 상품관리 (Product Management)
+java
+// 상품 목록 화면
+- 상품 목록 테이블 (JTable)
+  - 상품코드, 상품명, 카테고리, 가격, 재고, 판매상태, 등록일
+- 상품 검색 패널
+  - 검색어 입력 (JTextField)
+  - 카테고리 선택 (JComboBox)
+  - 검색 버튼 (JButton)
+- 상품 등록 버튼 (JButton)
+- 상품 수정 버튼 (JButton)
+- 상품 삭제 버튼 (JButton)
+- 재고 관리 버튼 (JButton)
+- 엑셀 다운로드 버튼 (JButton)
+
+// 상품 등록/수정 화면
+- 상품명 입력 (JTextField)
+- 카테고리 선택 (JComboBox)
+  - 의류, 전자기기, 식품, 도서, 가구, 기타
+- 상품가격 입력 (JTextField)
+- 재고수량 입력 (JTextField)
+- 할인율 입력 (JTextField)
+- 상품설명 입력 (JTextArea, JScrollPane)
+- 상품 이미지 업로드 (JButton)
+  - 대표이미지, 상세이미지 여러개
+- 판매상태 선택 (JComboBox)
+  - 판매중, 품절, 숨김
+- 옵션 관리 (JPanel)
+  - 옵션명, 옵션값 추가/삭제
+- 저장 버튼 (JButton)
+- 취소 버튼 (JButton)
+- 미리보기 버튼 (JButton)
+3. 주문관리 (Order Management)
+java
+// 주문 목록 화면
+- 주문 목록 테이블 (JTable)
+  - 주문번호, 주문일시, 고객명, 상품명, 금액, 결제방법, 주문상태
+- 필터 패널
+  - 주문일자 검색 (JDateChooser)
+  - 주문상태 선택 (JComboBox)
+    - 전체, 결제대기, 결제완료, 배송준비, 배송중, 배송완료, 취소
+  - 결제방법 선택 (JComboBox)
+    - 전체, 카드, 계좌이체, 가상계좌
+- 주문 상세보기 버튼 (JButton)
+- 주문 상태 일괄 변경 버튼 (JButton)
+- 주문 취소 처리 버튼 (JButton)
+- 발주서 출력 버튼 (JButton)
+- 엑셀 다운로드 버튼 (JButton)
+
+// 주문 상세보기 화면
+- 주문 기본정보
+  - 주문번호, 주문일시, 고객정보
+- 주문상품 목록
+  - 상품명, 옵션, 수량, 가격, 합계
+- 배송정보
+  - 받는사람, 주소, 연락처, 배송메모
+- 결제정보
+  - 결제수단, 결제금액, 결제일시
+- 주문처리 이력 (JTextArea)
+- 주문상태 변경 버튼 (JButton)
+- 배송처리 버튼 (JButton)
+- 재고 차감 처리 버튼 (JButton)
+4. 배송관리 (Shipping Management)
+java
+// 배송 관리 화면
+- 배송대기 목록 테이블 (JTable)
+  - 주문번호, 주문일시, 고객명, 상품명, 배송지, 우편번호
+- 배송지 정보 수정 패널
+  - 송장번호 입력 (JTextField)
+  - 택배사 선택 (JComboBox)
+    - CJ대한통운, 한진택배, 로젠택배, 우체국택배
+- 배송상태 변경
+  - 배송준비 → 배송중 → 배송완료
+- 배송 메모 입력 (JTextArea)
+- 배송 처리 버튼 (JButton)
+- 배송조회 버튼 (JButton)
+- 일괄 배송 처리 버튼 (JButton)
+5. 재고관리 (Inventory Management)
+java
+// 재고 관리 화면
+- 재고 현황 테이블 (JTable)
+  - 상품코드, 상품명, 현재재고, 안전재고, 재고상태, 입고일
+- 필터 옵션
+  - 카테고리 선택 (JComboBox)
+  - 재고상태 선택 (JComboBox)
+    - 전체, 충분, 부족, 품절
+- 재고 수정 패널
+  - 상품 선택 (JComboBox)
+  - 변경 수량 입력 (JTextField)
+  - 변경 사유 입력 (JTextArea)
+- 입고 처리 버튼 (JButton)
+- 출고 처리 버튼 (JButton)
+- 재고 조정 버튼 (JButton)
+- 재고 알림 설정 버튼 (JButton)
+- 재고 엑셀 다운로드 버튼 (JButton)
+6. 매출관리 (Sales Management)
+java
+// 매출 관리 화면
+- 매출 통계 패널
+  - 일별 매출 그래프 (JPanel)
+  - 주별 매출 그래프 (JPanel)
+  - 월별 매출 그래프 (JPanel)
+- 기간별 조회 패널
+  - 시작일 (JDateChooser)
+  - 종료일 (JDateChooser)
+  - 조회 버튼 (JButton)
+- 매출 상세 테이블 (JTable)
+  - 일자, 주문건수, 총매출, 평균주문금액, 결제수단별 매출
+- 통계 지표 표시
+  - 총매출액, 총주문건수, 평균주문금액, 환불금액
+- 엑셀 리포트 출력 버튼 (JButton)
+- 차트 출력 버튼 (JButton)
+7. 리뷰관리 (Review Management)
+java
+// 리뷰 관리 화면
+- 리뷰 목록 테이블 (JTable)
+  - 리뷰번호, 상품명, 작성자, 평점, 내용, 작성일, 상태
+- 리뷰 필터
+  - 평점 선택 (JComboBox) - 1~5점
+  - 기간 검색 (JDateChooser)
+  - 상태 선택 (JComboBox) - 전체, 미답변, 답변완료
+- 리뷰 상세보기 화면
+  - 상품명, 작성자, 평점, 내용, 이미지
+- 답변 작성 패널 (JTextArea)
+- 답변 등록 버튼 (JButton)
+- 리뷰 삭제 버튼 (JButton)
+- 신고된 리뷰 처리 버튼 (JButton)
+8. 공지사항/이벤트 관리 (Notice & Event Management)
+java
+// 공지사항 관리 화면
+- 공지사항 목록 테이블 (JTable)
+  - 번호, 제목, 작성일, 조회수, 중요도
+- 공지사항 등록/수정 화면
+  - 제목 입력 (JTextField)
+  - 중요도 선택 (JComboBox) - 일반, 중요, 긴급
+  - 내용 입력 (JTextArea)
+  - 첨부파일 업로드 (JButton)
+  - 공지기간 설정 (JDateChooser)
+  - 상단고정 체크박스 (JCheckBox)
+  - 저장/취소 버튼
+- 이벤트 관리 화면
+  - 이벤트 목록 테이블
+  - 이벤트 등록/수정
+  - 쿠폰 발행 관리
+9. 회원관리 (Member Management)
+java
+// 회원 관리 화면
+- 회원 목록 테이블 (JTable)
+  - 회원번호, 아이디, 이름, 이메일, 가입일, 등급, 상태
+- 회원 검색 패널
+  - 검색어 입력 (JTextField)
+  - 검색조건 선택 (JComboBox)
+    - 아이디, 이름, 이메일, 전화번호
+- 회원 상세보기 화면
+  - 기본정보, 주문내역, 포인트, 등급
+- 회원 상태 변경
+  - 정상, 휴면, 정지, 탈퇴
+- 회원 등급 변경 (JComboBox)
+- 포인트 지급/차감 버튼 (JButton)
+🔄 화면 전환 시스템 (Screen Transition System)
+메인 프레임 구조
+java
+public class MainFrame extends JFrame {
+    // CardLayout을 사용한 화면 전환
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
+    
+    // 구매자/판매자 전환 버튼
+    private JButton buyerModeBtn;
+    private JButton sellerModeBtn;
+    
+    // 각 화면 패널
+    private BuyerPanel buyerPanel;
+    private SellerPanel sellerPanel;
+}
+구매자 메뉴 구성
+java
+public class BuyerPanel extends JPanel {
+    // 메뉴 버튼들
+    private JButton signUpBtn;          // 회원가입
+    private JButton myPageBtn;          // 내 정보
+    private JButton updateInfoBtn;      // 정보수정
+    private JButton withdrawalBtn;      // 회원탈퇴
+    private JButton addressBtn;         // 배송지관리
+    private JButton orderHistoryBtn;    // 주문내역
+    private JButton logoutBtn;          // 로그아웃
+}
+판매자 메뉴 구성
+java
+public class SellerPanel extends JPanel {
+    // 메뉴 버튼들
+    private JButton dashboardBtn;       // 대시보드
+    private JButton productBtn;         // 상품관리
+    private JButton orderBtn;           // 주문관리
+    private JButton shippingBtn;        // 배송관리
+    private JButton inventoryBtn;       // 재고관리
+    private JButton salesBtn;           // 매출관리
+    private JButton reviewBtn;          // 리뷰관리
+    private JButton noticeBtn;          // 공지사항
+    private JButton memberBtn;          // 회원관리
+    private JButton logoutBtn;          // 로그아웃
+}
+🎯 Copilot 프롬프트 예시
+1. 기본 프레임 생성 프롬프트
+text
+Create a Java Swing application with JFrame that can switch between Buyer and Seller modes using CardLayout. The frame should have a title "Shopping Mall Management System" and size 1200x800. Include a top panel with mode switching buttons.
+2. 구매자 회원가입 화면 프롬프트
+text
+Create a Java Swing JPanel for buyer sign-up with the following components:
+- JTextField for ID (with duplicate check button)
+- JPasswordField for password and confirm password
+- JTextField for name, email, phone number, birthdate
+- JButton for submit and cancel
+- Add validation for password matching and email format
+- Use GridBagLayout for proper alignment
+- Add Korean/Chinese comments for each component
+3. 상품 관리 화면 프롬프트
+text
+Create a Java Swing JPanel for seller product management with:
+- JTable showing product list (code, name, category, price, stock, status)
+- JPanel with search field and category filter
+- JButtons for product registration, modification, deletion
+- JButton for inventory management
+- Add product registration dialog with JDialog
+- Include product image upload functionality using JFileChooser
+4. 주문 관리 화면 프롬프트
+text
+Create a seller order management panel with:
+- JTable showing orders (order number, date, customer, product, amount, status)
+- Filter panel with date chooser and order status combo box
+- Order detail view with JDialog showing complete order information
+- Buttons for status update, cancellation, and invoice printing
+- Add batch processing functionality for multiple orders
+5. 배송지 관리 화면 프롬프트
+text
+Create a buyer shipping address management panel with:
+- JTable showing address list (name, recipient, address, contact, default)
+- Buttons for add, modify, delete address
+- Set default address functionality
+- Address registration dialog with postal code search button
+- Use JTextField for all address components
+6. 통계/대시보드 화면 프롬프트
+text
+Create a seller dashboard panel with:
+- Summary statistics labels (today's orders, total sales, new members)
+- JPanel for sales chart using Graphics2D
+- JList for new order notifications
+- JList for low stock alerts
+- Use Timer for auto-refresh every 30 seconds
+- Add Color coding for different status indicators
+📝 구현 시 고려사항
+데이터베이스 연동
+java
+// JDBC 연결 예시
+public class DatabaseManager {
+    private Connection connection;
+    private static final String URL = "jdbc:mysql://localhost:3306/shoppingmall";
+    private static final String USER = "root";
+    private static final String PASSWORD = "password";
+    
+    // CRUD 메서드 구현
+    // Member, Product, Order, Address 테이블 처리
+}
+MVC 패턴 적용
+java
+// Model: 데이터 및 비즈니스 로직
+public class MemberModel { ... }
+public class ProductModel { ... }
+public class OrderModel { ... }
+
+// View: UI 컴포넌트
+public class MemberView { ... }
+public class ProductView { ... }
+
+// Controller: 이벤트 처리
+public class MemberController { ... }
+public class ProductController { ... }
+공통 유틸리티 클래스
+java
+// 유효성 검사
+public class Validator {
+    public static boolean isValidEmail(String email) { ... }
+    public static boolean isValidPhone(String phone) { ... }
+}
+
+// 날짜 포맷 유틸리티
+public class DateUtil {
+    public static String formatDate(Date date) { ... }
+}
+
+// 숫자 포맷 유틸리티
+public class NumberUtil {
+    public static String formatCurrency(double amount) { ... }
+}
+🚀 실행 방법
+bash
+# 1. 프로젝트 디렉토리 구조 생성
+src/
+├── main/
+│   ├── java/
+│   │   ├── controller/
+│   │   ├── model/
+│   │   ├── view/
+│   │   └── util/
+│   └── resources/
+└── test/
+
+# 2. 메인 클래스 실행
+java -cp . MainFrame
+
+# 3. IntelliJ/Eclipse에서 실행
+# MainFrame.java를 Run as Java Application
+이 프롬프트를 Copilot에 입력하면 상세한 Java Swing 코드를 생성할 수 있습니다. 각 기능별로 세분화된 프롬프트를 사용하여 점진적으로 개발하시면 됩니다.

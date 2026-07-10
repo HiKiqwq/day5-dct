@@ -1,0 +1,615 @@
+Spring Boot + Thymeleaf 쇼핑몰 시스템 구축 프롬프트
+📋 프로젝트 개요
+Spring Boot와 Thymeleaf를 활용하여 네이버 쇼핑 스타일의 구매자/판매자 전환 쇼핑몰 시스템을 개발합니다. DB 연결 없이 샘플 데이터를 배열/리스트로 관리합니다.
+
+🏗️ 프로젝트 구조
+text
+shoppingmall/
+├── src/main/java/com/shopping/
+│   ├── ShoppingMallApplication.java
+│   ├── controller/
+│   │   ├── MainController.java
+│   │   ├── BuyerController.java
+│   │   ├── SellerController.java
+│   │   └── CalculatorController.java
+│   ├── model/
+│   │   ├── Member.java
+│   │   ├── Product.java
+│   │   ├── Order.java
+│   │   ├── Address.java
+│   │   ├── Review.java
+│   │   ├── Notice.java
+│   │   └── CartItem.java
+│   └── service/
+│       ├── MemberService.java
+│       ├── ProductService.java
+│       ├── OrderService.java
+│       ├── AddressService.java
+│       ├── ReviewService.java
+│       └── DataInitializer.java
+├── src/main/resources/
+│   ├── templates/
+│   │   ├── fragments/
+│   │   │   ├── header.html
+│   │   │   ├── footer.html
+│   │   │   └── sidebar.html
+│   │   ├── buyer/
+│   │   │   ├── index.html
+│   │   │   ├── signup.html
+│   │   │   ├── mypage.html
+│   │   │   ├── update.html
+│   │   │   ├── withdrawal.html
+│   │   │   ├── address-list.html
+│   │   │   ├── address-form.html
+│   │   │   ├── order-history.html
+│   │   │   └── order-detail.html
+│   │   ├── seller/
+│   │   │   ├── index.html
+│   │   │   ├── dashboard.html
+│   │   │   ├── product-list.html
+│   │   │   ├── product-form.html
+│   │   │   ├── order-list.html
+│   │   │   ├── order-detail.html
+│   │   │   ├── shipping-list.html
+│   │   │   ├── inventory-list.html
+│   │   │   ├── sales-list.html
+│   │   │   ├── review-list.html
+│   │   │   ├── review-detail.html
+│   │   │   ├── notice-list.html
+│   │   │   ├── notice-form.html
+│   │   │   └── member-list.html
+│   │   ├── calculator.html
+│   │   └── error.html
+│   └── static/
+│       ├── css/
+│       │   ├── style.css
+│       │   └── bootstrap.min.css
+│       └── js/
+│           ├── main.js
+│           └── calculator.js
+└── pom.xml
+🎯 Copilot 프롬프트 (Spring Boot + Thymeleaf)
+1. 프로젝트 기본 설정 프롬프트
+text
+Create a Spring Boot project for a shopping mall management system with the following specifications:
+
+1. Use Spring Boot 2.7.x with Spring Web, Thymeleaf, and Lombok dependencies
+2. Use Java 11 or 17
+3. Create package structure: com.shoppingmall
+4. No database connection - use in-memory data storage with List/ArrayList
+5. Use Bootstrap 5 for responsive UI
+6. Create application.properties with basic settings
+7. Create a main application class with SpringBootApplication annotation
+8. Implement session management using HttpSession for login/logout
+9. Use ModelAndView or Model for data passing to Thymeleaf templates
+
+Generate the complete pom.xml with all necessary dependencies.
+2. 데이터 모델 클래스 프롬프트
+text
+Create the following model classes in Java for a shopping mall system:
+
+1. Member.java - with fields: id, password, name, email, phone, birthDate, joinDate, lastLogin, grade, points, status
+2. Product.java - with fields: code, name, category, price, stock, status, description, regDate
+3. Order.java - with fields: orderNo, memberId, orderDate, totalAmount, status, paymentMethod
+4. OrderItem.java - with fields: orderNo, productCode, productName, quantity, price, option
+5. Address.java - with fields: id, memberId, name, recipient, address, contact, isDefault
+6. Review.java - with fields: id, productCode, productName, rating, content, author, writeDate, status, reply
+7. Notice.java - with fields: id, title, content, writeDate, views, importance, isPinned
+8. CartItem.java - with fields: memberId, productCode, productName, quantity, price, option
+
+Generate all fields with proper getters, setters, and constructors. Use Lombok annotations (@Data, @NoArgsConstructor, @AllArgsConstructor).
+3. 데이터 초기화 및 서비스 클래스 프롬프트
+text
+Create service classes with in-memory data management:
+
+1. DataInitializer.java - Initialize sample data for testing:
+   - Create 3 members (buyer01, seller01, admin)
+   - Create 5 products (electronics, clothing, food, books, furniture)
+   - Create 3 orders with different statuses
+   - Create 2 addresses for buyer
+   - Create 3 reviews
+   - Create 2 notices
+   Use @PostConstruct to load initial data
+
+2. MemberService.java - Implement CRUD operations:
+   - findAll(), findById(), save(), update(), delete()
+   - login(id, password)
+   - findByName(), findByEmail()
+   - duplicateCheck(id)
+   - updatePassword(), updateGrade(), updatePoints()
+
+3. ProductService.java - Implement:
+   - findAll(), findById(), save(), update(), delete()
+   - searchByKeyword(keyword)
+   - filterByCategory(category)
+   - updateStock(productCode, quantity)
+   - getLowStockProducts(threshold)
+
+4. OrderService.java - Implement:
+   - findAll(), findById(), save(), update(), delete()
+   - findByMemberId(memberId)
+   - findByStatus(status)
+   - findByDateRange(startDate, endDate)
+   - updateOrderStatus(orderNo, status)
+   - cancelOrder(orderNo)
+
+5. AddressService.java - Implement:
+   - findByMemberId(memberId)
+   - save(), update(), delete()
+   - setDefaultAddress(memberId, addressId)
+
+6. ReviewService.java - Implement:
+   - findAll(), findById(), save(), update(), delete()
+   - findByProduct(productCode)
+   - findByRating(rating)
+   - updateReviewStatus(id, status)
+   - addReply(id, reply)
+
+Generate all methods with proper JavaDoc comments and Korean/Chinese comments.
+4. 메인 컨트롤러 프롬프트
+text
+Create MainController.java with the following features:
+
+1. Handle main page: "/" - show index page with mode selection
+2. Handle mode switching: "/buyer-mode", "/seller-mode"
+3. Handle login/logout: "/login", "/logout"
+4. Handle calculator: "/calculator" - open calculator page
+5. Use session management for user login state
+6. Add interceptor for authentication check
+7. Implement role-based access control (BUYER, SELLER, ADMIN)
+
+Generate methods with proper RequestMapping annotations and Thymeleaf view names.
+5. 구매자 컨트롤러 프롬프트 (BuyerController)
+text
+Create BuyerController.java with mapping for "/buyer":
+
+1. GET /buyer/index - Show buyer main page with product list (네이버 쇼핑 스타일)
+2. GET /buyer/signup - Show signup form
+3. POST /buyer/signup - Process signup with validation
+4. GET /buyer/mypage - Show member detail page
+5. GET /buyer/update - Show update form
+6. POST /buyer/update - Process update
+7. GET /buyer/withdrawal - Show withdrawal confirmation
+8. POST /buyer/withdrawal - Process withdrawal
+9. GET /buyer/address - Show address list
+10. GET /buyer/address/form - Show address add form
+11. POST /buyer/address/save - Save address
+12. GET /buyer/address/edit/{id} - Show address edit form
+13. POST /buyer/address/update/{id} - Update address
+14. GET /buyer/address/delete/{id} - Delete address
+15. GET /buyer/address/default/{id} - Set default address
+16. GET /buyer/orders - Show order history with filters
+17. GET /buyer/order/{orderNo} - Show order detail
+18. POST /buyer/order/cancel/{orderNo} - Cancel order
+19. GET /buyer/cart - Show shopping cart
+20. POST /buyer/cart/add - Add to cart
+21. GET /buyer/cart/remove/{productCode} - Remove from cart
+22. POST /buyer/checkout - Process checkout
+
+Add validation for all forms and proper error handling. Use Model for data passing to Thymeleaf.
+6. 판매자 컨트롤러 프롬프트 (SellerController)
+text
+Create SellerController.java with mapping for "/seller":
+
+1. GET /seller/index - Show seller dashboard
+2. GET /seller/products - Show product list with search
+3. GET /seller/product/form - Show product registration form
+4. POST /seller/product/save - Save product
+5. GET /seller/product/edit/{code} - Show product edit form
+6. POST /seller/product/update/{code} - Update product
+7. GET /seller/product/delete/{code} - Delete product
+8. GET /seller/orders - Show order list with filters
+9. GET /seller/order/{orderNo} - Show order detail
+10. POST /seller/order/status/{orderNo} - Update order status
+11. GET /seller/shipping - Show shipping management
+12. POST /seller/shipping/process - Process shipping
+13. POST /seller/shipping/batch - Batch shipping processing
+14. GET /seller/inventory - Show inventory status
+15. POST /seller/inventory/adjust - Adjust inventory
+16. GET /seller/sales - Show sales statistics
+17. GET /seller/reviews - Show review list
+18. GET /seller/review/{id} - Show review detail
+19. POST /seller/review/reply/{id} - Add review reply
+20. GET /seller/notices - Show notice list
+21. GET /seller/notice/form - Show notice form
+22. POST /seller/notice/save - Save notice
+23. GET /seller/notice/edit/{id} - Show notice edit form
+24. POST /seller/notice/update/{id} - Update notice
+25. GET /seller/notice/delete/{id} - Delete notice
+26. GET /seller/members - Show member list
+27. GET /seller/member/{id} - Show member detail
+28. POST /seller/member/status/{id} - Update member status
+29. POST /seller/member/points/{id} - Update member points
+
+Add pagination support and search/filter functionality for all list views.
+7. 계산기 컨트롤러 프롬프트 (CalculatorController)
+text
+Create CalculatorController.java with:
+
+1. GET /calculator - Show calculator page
+2. POST /calculator/calculate - Process calculation
+   - Accept parameters: num1, num2, operator
+   - Return result as JSON or Model attribute
+   - Support operations: add, subtract, multiply, divide
+   - Handle division by zero error
+
+Make calculator accessible from both buyer and seller modes.
+8. Thymeleaf 템플릿 - 구매자 메인 화면 (네이버 쇼핑 스타일)
+text
+Create buyer/index.html with 네이버 쇼핑 style:
+
+1. Header with:
+   - Logo (Shopping Mall)
+   - Search bar with product search
+   - Login/Logout buttons
+   - My Page link
+   - Cart icon with item count
+
+2. Main content with:
+   - Category navigation (의류, 전자기기, 식품, 도서, 가구, 기타)
+   - Product grid showing products with:
+     - Product image placeholder
+     - Product name
+     - Price (with discount if applicable)
+     - Rating stars
+     - Add to cart button
+   - Pagination
+
+3. Sidebar with:
+   - Recent view products
+   - Best sellers
+   - Recommended products
+
+4. Footer with:
+   - Company information
+   - Customer service links
+
+Use Thymeleaf th:each, th:if, th:replace for dynamic content. Include Bootstrap 5 styling.
+9. Thymeleaf 템플릿 - 구매자 회원가입
+text
+Create buyer/signup.html with:
+
+1. Form with:
+   - ID input with duplicate check button (AJAX)
+   - Password input
+   - Confirm password input
+   - Name input
+   - Email input with validation
+   - Phone input
+   - Birthdate input
+   - Sign up button
+   - Cancel button
+
+2. Validation messages using th:errors
+3. Success/Error messages using th:if
+4. Use Bootstrap form validation classes
+5. Add client-side validation with JavaScript
+
+Include Korean/Chinese comments in the HTML.
+10. Thymeleaf 템플릿 - 구매자 주문내역
+text
+Create buyer/order-history.html with:
+
+1. Filter panel:
+   - Date range picker (start/end)
+   - Status dropdown (전체, 결제완료, 배송준비, 배송중, 배송완료, 취소)
+   - Sort dropdown (최신순, 오래된순, 금액높은순, 금액낮은순)
+   - Search button
+
+2. Order list table with:
+   - Order number
+   - Order date
+   - Product name
+   - Quantity
+   - Amount
+   - Status (with color coding)
+   - Detail view button
+
+3. Pagination
+
+4. Order detail modal or page showing:
+   - Order基本信息
+   - Shipping information
+   - Product list
+   - Payment information
+   - Cancel button (if cancellable)
+11. Thymeleaf 템플릿 - 판매자 대시보드
+text
+Create seller/index.html with:
+
+1. Statistics cards:
+   - Today's orders count
+   - Total sales amount
+   - New members today
+   - Average order amount
+
+2. Chart area using Chart.js:
+   - Monthly sales chart
+   - Daily order trend
+
+3. Recent activity:
+   - New order notifications (JList style)
+   - Low stock alerts (JList style)
+   - Recent reviews
+
+4. Quick action buttons:
+   - Add product
+   - Process orders
+   - Update inventory
+
+5. Use Bootstrap cards and grid system
+6. Add auto-refresh with JavaScript Timer (every 30 seconds)
+12. Thymeleaf 템플릿 - 판매자 상품관리
+text
+Create seller/product-list.html with:
+
+1. Search panel:
+   - Search input
+   - Category dropdown
+   - Status dropdown
+   - Search button
+   - Reset button
+
+2. Action buttons:
+   - Add product
+   - Export Excel
+   - Bulk delete
+
+3. Product table with:
+   - Product code
+   - Product name
+   - Category
+   - Price (format currency)
+   - Stock (with color coding: green=sufficient, yellow=low, red=out of stock)
+   - Status (badge: 판매중, 품절, 숨김)
+   - Registration date
+   - Edit button
+   - Delete button
+
+4. Pagination
+
+5. Product form modal for add/edit with:
+   - Product name input
+   - Category dropdown
+   - Price input
+   - Stock input
+   - Discount rate input
+   - Description textarea
+   - Status dropdown
+   - Save button
+   - Cancel button
+13. Thymeleaf 템플릿 - 계산기
+text
+Create calculator.html with:
+
+1. Calculator layout:
+   - Display area showing input and result
+   - Number buttons (0-9)
+   - Operation buttons (+, -, *, /)
+   - Clear button (C)
+   - Equals button (=)
+   - History panel showing calculation history
+
+2. Use JavaScript for calculator logic:
+   - Button click handlers
+   - Calculation functions
+   - History management
+   - Keyboard support
+
+3. Styled like a real calculator with:
+   - Grid layout for buttons
+   - Different colors for number, operation, and function buttons
+   - Responsive design
+
+4. Include back/close button to return to previous page
+14. CSS 스타일링 프롬프트
+text
+Create style.css with:
+
+1. Global styles:
+   - Font family
+   - Color palette (네이버 스타일: green, navy, white)
+   - Spacing and typography
+
+2. Header styles:
+   - Navigation bar styling
+   - Search bar styling
+   - User menu dropdown
+
+3. Product card styles:
+   - Product image container
+   - Product info layout
+   - Price styling
+   - Rating stars
+
+4. Table styles:
+   - Striped tables
+   - Hover effects
+   - Status badges
+
+5. Form styles:
+   - Input group styling
+   - Validation states
+   - Button styles
+
+6. Dashboard styles:
+   - Stat cards with icons
+   - Chart containers
+   - Notification items
+
+7. Responsive design:
+   - Mobile-first approach
+   - Media queries for different screen sizes
+
+8. Dark mode support (optional)
+15. JavaScript 기능 프롬프트
+text
+Create main.js with:
+
+1. AJAX functions:
+   - ID duplicate check
+   - Address search (postal code)
+   - Cart operations (add, remove, update)
+   - Order status update
+   - Review reply submission
+
+2. Form validation:
+   - Email format check
+   - Password strength check
+   - Phone number format check
+   - Required field validation
+
+3. UI interactions:
+   - Modal management
+   - Toggle sidebar
+   - Show/hide password
+   - Image preview
+
+4. Utility functions:
+   - Format currency
+   - Format date
+   - Generate random ID
+   - Toast notifications
+
+5. Cart management:
+   - Add to cart with animation
+   - Update quantity
+   - Calculate total
+
+Use Fetch API for AJAX calls and vanilla JavaScript.
+16. 공통 프래그먼트 (Fragment) 프롬프트
+text
+Create Thymeleaf fragments:
+
+1. header.html - Common header with:
+   - Navigation bar
+   - Mode switching buttons
+   - Login status
+   - User menu (My Page, Cart, Logout)
+
+2. footer.html - Common footer with:
+   - Company info
+   - Links
+   - Copyright
+
+3. sidebar.html - Common sidebar with:
+   - User info
+   - Quick links
+   - Recent activity
+
+4. modal.html - Common modal template
+
+5. pagination.html - Common pagination template
+
+6. alert.html - Common alert/notification template
+
+Use th:fragment and th:replace for template reuse.
+17. 인터셉터 및 세션 관리 프롬프트
+text
+Create security components:
+
+1. LoginInterceptor.java - Check user login status:
+   - PreHandle method to check session
+   - Redirect to login if not authenticated
+   - Exclude login, signup, and error pages
+
+2. RoleInterceptor.java - Check user role:
+   - Verify user has proper role for accessing pages
+   - Prevent buyer from accessing seller pages
+   - Prevent seller from accessing buyer pages
+
+3. SessionManager.java - Manage session attributes:
+   - setUser(member)
+   - getUser()
+   - clear()
+   - isLoggedIn()
+   - getRole()
+
+Create WebConfig.java to register interceptors.
+18. 예외 처리 및 에러 페이지 프롬프트
+text
+Create error handling:
+
+1. GlobalExceptionHandler.java with @ControllerAdvice:
+   - Handle validation exceptions
+   - Handle business exceptions
+   - Handle access denied exceptions
+   - Return appropriate error views
+
+2. error.html - Generic error page with:
+   - Error message
+   - Error code
+   - Return to home button
+   - Contact support info
+
+3. 404.html - Page not found
+4. 500.html - Internal server error
+
+Add proper logging for all exceptions.
+19. application.properties 설정 프롬프트
+text
+Create application.properties with:
+
+1. Server settings:
+   server.port=8080
+   server.servlet.context-path=/
+
+2. Thymeleaf settings:
+   spring.thymeleaf.cache=false (for development)
+   spring.thymeleaf.prefix=classpath:/templates/
+   spring.thymeleaf.suffix=.html
+   spring.thymeleaf.encoding=UTF-8
+
+3. Session settings:
+   server.servlet.session.timeout=30m
+   server.servlet.session.tracking-modes=cookie
+
+4. Logging:
+   logging.level.com.shopping=DEBUG
+   logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} - %msg%n
+
+5. File upload settings (for product images):
+   spring.servlet.multipart.max-file-size=10MB
+   spring.servlet.multipart.max-request-size=10MB
+20. 메인 애플리케이션 실행 프롬프트
+text
+Create ShoppingMallApplication.java with:
+
+1. @SpringBootApplication annotation
+2. main method with SpringApplication.run()
+3. Implement CommandLineRunner for data initialization
+4. Add @EnableWebMvc for MVC configuration
+5. Register resource handlers for static files
+
+Create run configuration for IntelliJ IDEA.
+📝 실행 방법
+bash
+# 프로젝트 생성
+mvn archetype:generate -DgroupId=com.shopping -DartifactId=shoppingmall -DarchetypeArtifactId=gradle-archetype-quickstart -DinteractiveMode=false
+
+# 의존성 설치
+mvn clean install
+
+# 애플리케이션 실행
+mvn spring-boot:run
+
+# 또는 IntelliJ IDEA에서 ShoppingMallApplication.java 실행
+🎯 Copilot에 입력할 통합 프롬프트
+text
+Create a Spring Boot + Thymeleaf shopping mall application with the following features:
+
+1. No database connection - use in-memory data with List/ArrayList
+2. Two modes: Buyer (네이버 쇼핑 style) and Seller (admin dashboard)
+3. Complete buyer features: signup, mypage, update, withdrawal, address management, order history, shopping cart
+4. Complete seller features: dashboard, product management, order management, shipping management, inventory management, sales management, review management, notice management, member management
+5. Calculator accessible from main menu
+6. Use Bootstrap 5 for styling
+7. Use session management for login/logout
+8. Implement interceptors for authentication and role-based access
+9. Include sample data initialization
+10. Use Thymeleaf fragments for common components
+11. Add validation for all forms
+12. Include error handling and logging
+
+Generate all Java classes, Thymeleaf templates, CSS, and JavaScript files with Korean/Chinese comments.
+이 프롬프트를 Copilot에 입력하면 Spring Boot + Thymeleaf로 구성된 완전한 쇼핑몰 시스템을 생성할 수 있습니다. 각 기능별로 세분화된 프롬프트를 사용하여 단계별로 개발하시면 됩니다.
